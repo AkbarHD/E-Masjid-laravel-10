@@ -15,7 +15,8 @@ class EnsureDataMasjidCompleted
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->masjid == null) { // jika user tersebut blm isi data masjid maka dia akan terus di arahkan ke masjid.create
+        // jika user tersebut blm isi data masjid maka dia akan terus di arahkan ke masjid.create
+        if (auth()->user()->Masjid == null) {
             flash('Data Masjid Belum Lengkap, silahkan lengkapi data masjid terlebih dahulu')->error();
             return redirect()->route('masjid.create');
         }

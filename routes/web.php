@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KasController;
 use App\Http\Controllers\MasjidController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureDataMasjidCompleted;
@@ -27,12 +28,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('masjid', MasjidController::class);
     Route::middleware(EnsureDataMasjidCompleted::class)->group(function () {
         Route::resource('myprofile', ProfileController::class);
+        Route::resource('kas', KasController::class);
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     });
 });
